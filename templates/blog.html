@@ -4,15 +4,15 @@
 
     <h1>Build a Blog</h1>
     
-    {% if posts|length == 0 %}
+    {% if new_post != 0 %}
     <p>No posts yet</p>
     {% else %}
 
         <h2>Blog Posts</h2>
 
-        {% for post in posts %}
-            <h3>{{post.blog_title}}</h3>
-            <p>{{post.blog_body}}</p>
+        {% for new in new_post %}
+            <h3>{{ new.blog_title }}</h3>
+            <p>{{ new.blog_body }}</p>
         {% endfor %}
 
     {% endif %}
