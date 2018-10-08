@@ -11,8 +11,8 @@
         <h2>Blog Posts</h2>
 
         {% for new in new_post %}
-            <h3>{{ new.blog_title }}</h3>
-            <p>{{ new.blog_body }}</p>
+            <h3>{{ new.title }}</h3>
+            <p>{{ new.body }}</p>
         {% endfor %}
 
     {% endif %}

@@ -3,11 +3,26 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:holi!f4me@localhost:8889/build-a-blog'
-app.config['SQLALCHEMY_ECHO'] = True
-db = SQLAlchemy(app)
 
-class Blog(db.Model):
+posts = []
+
+@app.route('/newpost', methods=['POST', 'GET'])
+def newpost():
+
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body']
+        posts.append((title, body))
+    
+    return render_template('newpost.html', title="Add a Blog Entry", posts=posts)
+
+app.run()
+
+"""app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:holi!f4me@localhost:8889/build-a-blog'
+app.config['SQLALCHEMY_ECHO'] = True
+db = SQLAlchemy(app)"""
+
+"""class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
@@ -25,11 +40,11 @@ def blog():
 def newpost():
 
     if request.method == 'POST':
-        blog_title = request.form['title']
-        blog_body = request.form['body']
-        new_post = Blog(blog_title, blog_body)
+        title = request.form['title']
+        body = request.form['body']
         
-        if len(blog_title) != 0 and len(blog_body) != 0:
+        if len(title) != 0 and len(body) != 0:
+            new_post = Blog(title, body)
             db.session.add(new_post)
             db.session.commit()
             flash('New post created')
@@ -41,3 +56,4 @@ def newpost():
 
 if __name__ == '__main__':
     app.run()
+"""
