@@ -6,6 +6,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:holi!f4me@localhost:8889/build-a-blog'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+app.secret_key = 'wTq2aV3ssbqsvaSW'
 
 class Blog(db.Model):
 
@@ -19,32 +20,42 @@ class Blog(db.Model):
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
-    return render_template('blog.html', title="Build a Blog")
+    posts = Blog.query.all()
+    return render_template('blog.html', title="Build a Blog", posts=posts)
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
 
-    if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
-        new_post = Blog(title, body)
-        db.session.add(new_post)
-        db.session.commit()
+    title_error = ""
+    body_error = ""
 
+    if request.method == 'POST':
+        blog_title = request.form['blog_title']
+        blog_body = request.form['blog_body']
+        
+        if len(blog_title) == 0:
+            title_error = 'Please fill in the title'
+        
+        if len(blog_body) == 0:
+            body_error = 'Please fill in the body'
+        
+        if len(blog_title) == 0 and len(blog_body) == 0:
+            title_error = 'Please fill in the title'
+            body_error = 'Please fill in the body'
+        
+        if len(blog_title) != 0 and len(blog_body) != 0:
+            new_post = Blog(blog_title, blog_body)
+            db.session.add(new_post)
+            db.session.commit()
+            flash('New post created!')
+            return redirect('/blog')
+    
     posts = Blog.query.all()
-    return render_template('newpost.html', title="Add a Blog Entry", posts=posts)
+
+    return render_template('newpost.html', title="Add Blog Entry",
+    posts=posts,
+    title_error=title_error,
+    body_error=body_error)
 
 if __name__ == "__main__":
     app.run()
-
-
-"""     
-        if len(title) != 0 and len(body) != 0:
-            new_post = Blog(title, body)
-            db.session.add(new_post)
-            db.session.commit()
-            flash('New post created')
-            return redirect('/blog', new_post=new_post)
-        else:
-            flash('Blog title or blog content invalid')
-"""
