@@ -19,19 +19,17 @@
             </table>
             <input type="submit" value="Add Entry" />
     </form>
-
-    <hr />
-
-    <h1>Blog Listings</h1>
+    
     {% if posts|length == 0 %}
     <p> No posts yet</p>
     {% else %}
 
         {% for post in posts %}
-        <h3>{{post[0]}}</h3>
-        <p>{{post[1]}}</p>
+        <h3>{{post.title}}</h3>
+        <p>{{post.body}}</p>
+        <hr />
         {% endfor %}
-
+    
     {% endif %}
 
 {% endblock %}
