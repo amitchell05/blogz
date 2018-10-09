@@ -7,14 +7,14 @@
             <tr>
                 <td><label>Title for your new blog:</label></td>
                 <td>
-                    <input name="blog_title" type="text" />
+                    <input name="title" type="text" value="{{ blog_title }}"/>
                     <p class="error">{{title_error}}</p>
                 </td>
             </tr>
             <tr>
                 <td><label>Your new blog:</label></td>
                 <td>
-                    <textarea name="blog_body"></textarea>
+                    <textarea name="body">{{ blog_body }}</textarea>
                     <p class="error">{{body_error}}</p>
                 </td>
             </tr>

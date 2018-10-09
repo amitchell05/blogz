@@ -30,8 +30,8 @@ def newpost():
     body_error = ""
 
     if request.method == 'POST':
-        blog_title = request.form['blog_title']
-        blog_body = request.form['blog_body']
+        blog_title = request.form['title']
+        blog_body = request.form['body']
         
         if len(blog_title) == 0:
             title_error = 'Please fill in the title'
@@ -49,13 +49,16 @@ def newpost():
             db.session.commit()
             flash('New post created!')
             return redirect('/blog')
-    
-    posts = Blog.query.all()
 
-    return render_template('newpost.html', title="Add Blog Entry",
-    posts=posts,
-    title_error=title_error,
-    body_error=body_error)
+        else:
+            return render_template('newpost.html',
+            blog_title=blog_title,
+            blog_body=blog_body,
+            title_error=title_error,
+            body_error=body_error)
+
+    return render_template('newpost.html', title="Add Blog Entry")
+
 
 if __name__ == "__main__":
     app.run()
