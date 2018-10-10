@@ -21,11 +21,15 @@ class Blog(db.Model):
 @app.route('/blog', methods=['GET'])
 def blog():
     posts = Blog.query.all()
-    # TODO - Handle additional GET request on homepage with query parameters and render display_post template
-    # TODO - Pass the Blog Object into the template via render_template
-    # return render_template('display.html')
-    return render_template('blog.html', title="Build a Blog", posts=posts)
 
+    if request.args:
+        blog_id = request.args.get('id')
+        blog_post = Blog.query.get(blog_id)
+
+        return render_template('display_post.html', blog_post=blog_post)
+
+    return render_template('blog.html', title="Build a Blog", posts=posts)
+    
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
 
@@ -50,8 +54,10 @@ def newpost():
             new_post = Blog(blog_title, blog_body)
             db.session.add(new_post)
             db.session.commit()
+            session
+            id = new_post.id
             flash('New post created!')
-            return redirect('/blog')
+            return render_template('display_post.html', id=id)
 
         else:
             return render_template('newpost.html',
