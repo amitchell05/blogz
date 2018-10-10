@@ -18,9 +18,12 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
-@app.route('/blog', methods=['POST', 'GET'])
+@app.route('/blog', methods=['GET'])
 def blog():
     posts = Blog.query.all()
+    # TODO - Handle additional GET request on homepage with query parameters and render display_post template
+    # TODO - Pass the Blog Object into the template via render_template
+    # return render_template('display.html')
     return render_template('blog.html', title="Build a Blog", posts=posts)
 
 @app.route('/newpost', methods=['POST', 'GET'])
