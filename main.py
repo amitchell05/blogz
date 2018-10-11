@@ -51,11 +51,12 @@ def newpost():
             body_error = 'Please fill in the body'
         
         if len(blog_title) != 0 and len(blog_body) != 0:
-            post = Blog(blog_title, blog_body)
-            db.session.add(post)
+            blog_post = Blog(blog_title, blog_body)
+            db.session.add(blog_post)
             db.session.commit()
             flash('New post created!')
-            return render_template('display_post.html', post=post)
+            id = blog_post.id
+            return redirect('http://127.0.0.1:5000/blog?id={0}'.format(id))
 
         else:
             return render_template('newpost.html',
