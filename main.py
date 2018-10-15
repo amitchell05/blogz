@@ -186,7 +186,8 @@ def newpost():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 if __name__ == "__main__":
     app.run()
