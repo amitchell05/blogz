@@ -52,7 +52,7 @@ def login():
         else:
             flash('User password incorrect, or user does not exist', 'error')
     
-    return render_template('login.html')
+    return render_template('login.html', title="Login")
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -140,8 +140,7 @@ def blog():
     if request.args:
         blog_id = request.args.get('id')
         blog_post = Blog.query.get(blog_id)
-
-        return render_template('display_post.html', blog_post=blog_post)
+        return render_template('display_blog.html', blog_post=blog_post)
 
     return render_template('blog.html', title="Build a Blog", posts=posts)
     
@@ -184,10 +183,10 @@ def newpost():
 
     return render_template('newpost.html', title="Add Blog Entry")
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
     users = User.query.all()
-    return render_template('index.html', users=users)
+    return render_template('index.html', title="Home", users=users)
 
 if __name__ == "__main__":
     app.run()

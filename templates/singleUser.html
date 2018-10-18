@@ -2,20 +2,20 @@
 
 {% block content %}
 
-    <h1>Build a Blog</h1>
-    
-    {% if posts|length == 0 %}
+<!--TODO: Create a page to display posts of each individual user-->
+<!--<form action="/blog?user={{user.username}}">
+    {% if z|length == 0 %}
     <p>No posts yet</p>
     {% else %}
-
         {% for post in posts %}
             <a href="/blog?id={{post.id}}"><h2>{{post.title}}</h2></a>
             <p>{{post.body}}</p>
-            <p>Written by <a href="/blog?user={{post.id}}">{{post.owner.username}}</a></p>
+            <p>Written by <a href="/blog?user={{post.owner_id}}">{{post.owner.username}}</a></p>
             <hr />
 
         {% endfor %}
+</form>-->
 
     {% endif %}
- 
+
 {% endblock %}
