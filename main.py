@@ -142,6 +142,11 @@ def blog():
         blog_post = Blog.query.get(blog_id)
         return render_template('display_blog.html', blog_post=blog_post)
 
+    """if request.args:
+        user_id = request.args.get('id')
+        user_posts = Blog.query.get(user_id)
+        return render_template('singleUser.html', user_posts=user_posts)"""
+
     return render_template('blog.html', title="Build a Blog", posts=posts)
     
 @app.route('/newpost', methods=['POST', 'GET'])
