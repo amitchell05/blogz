@@ -138,15 +138,18 @@ def blog():
     blog_id = request.args.get('id')
     blog_user = request.args.get('user')
 
+    # renders individual blog entry
     if blog_id:
         blog_post = Blog.query.filter_by(id=blog_id).first()
         return render_template('display_blog.html', blog_post=blog_post)
 
+    # renders individual user's blog entries list
     if blog_user:
         user = User.query.filter_by(username=blog_user).first()
         blog_post = Blog.query.filter_by(owner=user).all()
         return render_template('blog.html', blog_post=blog_post, username=blog_user)
     
+    # renders all posts on main page
     else:
         blog_post = Blog.query.all()
         return render_template('blog.html', title="Build a Blog", blog_post=blog_post)
