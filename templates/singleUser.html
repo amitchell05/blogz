@@ -2,15 +2,20 @@
 
 {% block content %}
 
-<!--TODO: Create a page to display posts of each individual user-->
-    <h1>Your Blog Posts</h1>
-    <form action="/blog?user={{post.owner.username}}">
-        {% for post in posts %}
-            <h2><a href=/blog?id={{post.id}}>{{user's first blog post's title}}</a></h2>
-            <p>{{post.body}}</p>
-            <p>Written by <a href="/blog?user={{post.owner.username}}">{{post.owner.username}}</a></p>
+    <h1>{{username}}'s Blog Posts</h1>
+    
+    {% if blog_post|length == 0 %}
+    <p>No posts yet</p>
+    {% else %}
+
+        {% for blog in blog_post %}
+            <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
+            <p>{{blog.body}}</p>
+            <p>Written by <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></p>
             <hr />
-    </form>
+
         {% endfor %}
 
+    {% endif %}
+ 
 {% endblock %}

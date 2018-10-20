@@ -147,7 +147,7 @@ def blog():
     if blog_user:
         user = User.query.filter_by(username=blog_user).first()
         blog_post = Blog.query.filter_by(owner=user).all()
-        return render_template('blog.html', blog_post=blog_post, username=blog_user)
+        return render_template('singleUser.html', blog_post=blog_post, username=blog_user)
     
     # renders all posts on main page
     else:
