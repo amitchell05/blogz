@@ -104,14 +104,14 @@ def signup():
                 flash('User already exists')
                 return render_template('signup.html')
             
-            else:
-                return render_template('signup.html',
-                username=username,
-                username_error=username_error,
-                password_error=password_error,
-                verify_error=verify_error)
+        else:
+            return render_template('signup.html',
+            username=username,
+            username_error=username_error,
+            password_error=password_error,
+            verify_error=verify_error)
 
-    return render_template('signup.html')
+    return render_template('signup.html', title="Sign Up")
 
 def no_spaces(string):
     for char in string:
@@ -142,13 +142,13 @@ def blog():
     # renders individual blog entry
     if blog_id:
         blog_post = Blog.query.filter_by(id=blog_id).first()
-        return render_template('display_blog.html', blog_post=blog_post)
+        return render_template('display_blog.html', title="Blog Entry", blog_post=blog_post)
 
     # renders individual user's blog entries list
     if blog_user:
         user = User.query.filter_by(username=blog_user).first()
         blog_post = Blog.query.filter_by(owner=user).all()
-        return render_template('singleUser.html', blog_post=blog_post, username=blog_user)
+        return render_template('singleUser.html', title="User's Blog", blog_post=blog_post, username=blog_user)
     
     # renders all posts on main page
     else:
