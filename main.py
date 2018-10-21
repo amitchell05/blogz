@@ -101,7 +101,7 @@ def signup():
                 return redirect('/newpost')
             
             if existing_user:
-                flash('User already exists')
+                flash('User already exists', 'error')
                 return render_template('signup.html')
             
         else:
