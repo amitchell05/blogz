@@ -10,7 +10,7 @@
     <p>No posts yet</p>
     {% else %}
 
-        {% for blog in blog_postz %}
+        {% for blog in blog_post %}
         <div class="panel panel-default">
             <div class="panel-heading"><a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a></div>
             <div class="panel-body"><p>{{blog.body}}</p></div>
