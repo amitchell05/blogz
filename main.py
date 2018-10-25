@@ -47,11 +47,13 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_pw_hash(password, user.pw_hash):
             session['username'] = username
-            flash("Logged in")
+            flash("Logged in!")
             print(session)
             return redirect('/newpost')
         else:
-            flash('User password incorrect, or user does not exist', 'error')
+            flash('User password incorrect, or user does not exist', 'text-danger')
+            return render_template('login.html', title="Login",
+            username=username)
     
     return render_template('login.html', title="Login")
 
@@ -101,7 +103,7 @@ def signup():
                 return redirect('/newpost')
             
             if existing_user:
-                flash('User already exists', 'error')
+                flash('User already exists', 'text-danger')
                 return render_template('signup.html')
             
         else:
@@ -136,6 +138,7 @@ def logout():
 
 @app.route('/blog', methods=['GET'])
 def blog():
+    page = request.args.get('page', 1, type=int)
     blog_id = request.args.get('id')
     blog_user = request.args.get('user')
 
@@ -147,12 +150,12 @@ def blog():
     # renders individual user's blog entries list
     if blog_user:
         user = User.query.filter_by(username=blog_user).first()
-        blog_post = Blog.query.filter_by(owner=user).all()
+        blog_post = Blog.query.filter_by(owner=user).paginate(page=page, per_page=5)
         return render_template('singleUser.html', title="User's Blog", blog_post=blog_post, username=blog_user)
     
     # renders all posts on main page
     else:
-        blog_post = Blog.query.all()
+        blog_post = Blog.query.paginate(page=page, per_page=5)
         return render_template('blog.html', title="Build a Blog", blog_post=blog_post)
     
 @app.route('/newpost', methods=['POST', 'GET'])

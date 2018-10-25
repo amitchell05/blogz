@@ -2,19 +2,28 @@
 
 {% block content %}
 
-    <h1>{{username}}'s Blog Posts</h1>
+    <div class="page-header">
+        <h1 style="text-align: center">{{username}}'s Blog Posts</h1>
+    </div>
     
     {% if blog_post|length == 0 %}
     <p>No posts yet</p>
     {% else %}
 
-        {% for blog in blog_post %}
-            <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
-            <p>{{blog.body}}</p>
-            <p>Written by <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></p>
-            <hr />
+        {% for blog in blog_postz %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a></div>
+            <div class="panel-body"><p>{{blog.body}}</p></div>
+            <div class="panel-footer"><p>Written by <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></p></div>
+        </div>
 
         {% endfor %}
+
+        <!--Pagination not currently working in jinja or main.py-->
+        <ul class="pager">
+            <li class="disabled"><a href="#">Previous</a></li>
+            <li class="disabled"><a href="#">Next</a></li>
+        </ul>
 
     {% endif %}
  
